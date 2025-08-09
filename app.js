@@ -1,5 +1,3 @@
-// API_KEY is now secured on the backend server
-
 const searchDiv = document.getElementById("search-div");
 const searchInput = document.getElementById("search-input");
 const searchResultsDiv = document.querySelector(".search-results");
@@ -20,7 +18,6 @@ async function searchImages() {
     alert("Please enter a search term");
     return;
   }
-  // Now calling your backend API instead of Unsplash directly
   const url = `/api/search-images?query=${inputData}&page=${pageNumber}`;
 
   const searchImageResponse = await fetch(url);

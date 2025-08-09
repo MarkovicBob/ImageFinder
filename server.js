@@ -5,11 +5,10 @@ import path from "path";
 import { config } from "dotenv";
 import { fileURLToPath } from "url";
 
-// ES modules equivalent of __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-config(); // Load environment variables
+config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -37,7 +36,6 @@ app.get("/api/search-images", async (req, res) => {
 
     console.log("Making request to:", url);
 
-    // Use fetch (Node.js 18+ has built-in fetch)
     const response = await fetch(url);
 
     if (!response.ok) {
