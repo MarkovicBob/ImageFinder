@@ -18,7 +18,7 @@ async function searchImages() {
     alert("Please enter a search term");
     return;
   }
-  const url = `/api/search-images?query=${inputData}&page=${pageNumber}`;
+  const url = `https://imagefinder-backend.onrender.com/api/search-images?query=${inputData}&page=${pageNumber}`;
 
   const searchImageResponse = await fetch(url);
   const searchImageData = await searchImageResponse.json();
