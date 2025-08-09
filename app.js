@@ -11,7 +11,7 @@ async function searchImages() {
   inputData = searchInput.value;
   if (pageNumber === 1 || inputData === 0) {
     searchResultsDiv.innerHTML = "";
-    showMoreButton.style.display = "none";
+    // showMoreButton.style.display = "none"; // Remove the line hiding the button
   }
 
   if (inputData.length === 0) {
@@ -24,7 +24,7 @@ async function searchImages() {
   const searchImageData = await searchImageResponse.json();
 
   if (searchImageData.results.length === 0) {
-    showMoreButton.style.display = "none";
+    // showMoreButton.style.display = "none"; // Remove the line hiding the button
     return;
   }
 
@@ -85,10 +85,9 @@ async function searchImages() {
 
     searchResultsDiv.appendChild(imageDiv);
   });
+
   pageNumber = pageNumber + 1;
-  if (pageNumber > 1) {
-    showMoreButton.style.display = "block";
-  }
+  // showMoreButton.style.display = "block"; // Remove this line, as the "show more" button is no longer needed
 }
 
 searchImagesButton.addEventListener("click", (event) => {
@@ -96,4 +95,14 @@ searchImagesButton.addEventListener("click", (event) => {
   searchImages();
 });
 
-showMoreButton.addEventListener("click", searchImages);
+// Infinite Scroll Implementation
+window.onscroll = function () {
+  const scrollPosition = window.innerHeight + window.scrollY;
+  const documentHeight = document.documentElement.scrollHeight;
+
+  // Check if user has reached the bottom of the page
+  if (scrollPosition >= documentHeight - 10) {
+    // Adding a small offset for precision
+    searchImages(); // Load more content
+  }
+};

@@ -32,7 +32,7 @@ app.get("/api/search-images", async (req, res) => {
     const API_KEY = process.env.UNSPLASH_API_KEY;
     const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
       query
-    )}&page=${page || 1}&client_id=${API_KEY}`;
+    )}&page=${page || 1}&per_page=20&client_id=${API_KEY}`;
 
     console.log("Making request to:", url);
 
