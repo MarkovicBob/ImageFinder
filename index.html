@@ -16,5 +16,11 @@
     <div class="search-results"></div>
     <button id="show-more-button">Show More</button>
     <script src="app.js"></script>
+    <footer id="footer">
+      <span>Markovic Boban &copy; <span id="footer-year"></span> | All rights reserved.</span>
+    </footer>
+    <script>
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
   </body>
 </html>

@@ -4,27 +4,28 @@ const searchResultsDiv = document.querySelector(".search-results");
 const showMoreButton = document.getElementById("show-more-button");
 const searchImagesButton = document.getElementById("search-button");
 
+
 let inputData = "";
 let pageNumber = 1;
+let perPage = 20;
 
 async function searchImages() {
   inputData = searchInput.value;
-  if (pageNumber === 1 || inputData === 0) {
+  if (pageNumber === 1) {
     searchResultsDiv.innerHTML = "";
-    // showMoreButton.style.display = "none"; // Remove the line hiding the button
   }
 
   if (inputData.length === 0) {
     alert("Please enter a search term");
     return;
   }
-  const url = `https://imagefinder-backend.onrender.com/api/search-images?query=${inputData}&page=${pageNumber}`;
+  const url = `https://imagefinder-backend.onrender.com/api/search-images?query=${inputData}&page=${pageNumber}&per_page=${perPage}`;
 
   const searchImageResponse = await fetch(url);
   const searchImageData = await searchImageResponse.json();
 
   if (searchImageData.results.length === 0) {
-    // showMoreButton.style.display = "none"; // Remove the line hiding the button
+    showMoreButton.style.display = "none";
     return;
   }
 
@@ -87,22 +88,26 @@ async function searchImages() {
   });
 
   pageNumber = pageNumber + 1;
-  // showMoreButton.style.display = "block"; // Remove this line, as the "show more" button is no longer needed
+  showMoreButton.style.display = "block";
 }
+
 
 searchImagesButton.addEventListener("click", (event) => {
   pageNumber = 1;
+  perPage = 20;
   searchImages();
 });
 
-// Infinite Scroll Implementation
-window.onscroll = function () {
-  const scrollPosition = window.innerHeight + window.scrollY;
-  const documentHeight = document.documentElement.scrollHeight;
+showMoreButton.addEventListener("click", () => {
+  perPage = 40;
+  searchImages();
+});
 
-  // Check if user has reached the bottom of the page
-  if (scrollPosition >= documentHeight - 10) {
-    // Adding a small offset for precision
-    searchImages(); // Load more content
-  }
-};
+// Komentarisano infinite scroll
+// window.onscroll = function () {
+//   const scrollPosition = window.innerHeight + window.scrollY;
+//   const documentHeight = document.documentElement.scrollHeight;
+//   if (scrollPosition >= documentHeight - 10) {
+//     searchImages();
+//   }
+// };
