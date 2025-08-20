@@ -13,14 +13,20 @@ config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// --- Core middleware ---
 app.use(cors());
 app.use(express.json());
 
-// Serve static files (HTML, CSS, JS)
+// --- HEALTH CHECK (bez auth/DB; pre static) ---
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
+});
+app.head("/health", (req, res) => res.sendStatus(200));
+
+// --- Static files ---
 app.use(express.static(path.join(__dirname)));
 
-// API endpoint for image search
+// --- API: image search ---
 app.get("/api/search-images", async (req, res) => {
   try {
     const { query, page } = req.query;
@@ -37,7 +43,6 @@ app.get("/api/search-images", async (req, res) => {
     console.log("Making request to:", url);
 
     const response = await fetch(url);
-
     if (!response.ok) {
       throw new Error(
         `Unsplash API error: ${response.status} ${response.statusText}`
@@ -53,11 +58,7 @@ app.get("/api/search-images", async (req, res) => {
   }
 });
 
-// Health check endpoint
-app.get("/health", (req, res) => {
-  res.json({ status: "OK", timestamp: new Date().toISOString() });
-});
-
+// --- Start server ---
 app.listen(PORT, () => {
   console.log(chalk.cyan(`🚀 Server running on http://localhost:${PORT}`));
   console.log(
