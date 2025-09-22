@@ -21,7 +21,7 @@ app.use(express.json());
 app.get("/ealth", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
 });
-app.head("/health", (req, res) => res.sendStatus(200));
+app.head("/ealth", (req, res) => res.sendStatus(200));
 
 // --- Static files ---
 app.use(express.static(path.join(__dirname)));
