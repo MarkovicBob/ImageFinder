@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 // --- HEALTH CHECK (bez auth/DB; pre static) ---
-app.get("/health", (req, res) => {
+app.get("/ealth", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
 });
 app.head("/health", (req, res) => res.sendStatus(200));
